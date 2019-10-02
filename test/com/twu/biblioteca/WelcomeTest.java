@@ -45,6 +45,7 @@ public class WelcomeTest {
 
     @Test
     public void testMenuResponseExpected() {
+        setLibrary(new Library());
         handleUserResponse("1");
         String expectedList = "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
