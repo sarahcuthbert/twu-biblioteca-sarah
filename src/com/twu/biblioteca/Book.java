@@ -12,8 +12,8 @@ class Book {
         this.publicationYear = publicationYear;
     }
 
-    void printBook(int i) {
-        System.out.printf("%-10.10s %-30.30s  %-30.30s %-30.30s%n", i, title, author, publicationYear);
+    void printBook() {
+        System.out.printf("%-30.30s  %-30.30s %-30.30s%n", title, author, publicationYear);
     }
 
     String getTitle() {

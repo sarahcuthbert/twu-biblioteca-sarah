@@ -47,8 +47,8 @@ public class WelcomeTest {
     public void testMenuResponseExpected() {
         handleUserResponse("1");
         String expectedList = "Available Books:\n";
-        expectedList += "Number     Title                           Author                         Publication Date              \n";
-        expectedList += "Enter the number of a book to check it out and press Enter.\n";
+        expectedList += "Title                           Author                         Publication Date              \n";
+        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
