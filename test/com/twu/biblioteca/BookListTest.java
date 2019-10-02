@@ -131,4 +131,11 @@ public class BookListTest {
         assertEquals(expectedList, outContent.toString());
     }
 
+    @Test
+    public void testReturnBookErrorMessage() {
+        returnBook("book1");
+        String expectedList = "That is not a valid book to return.\n";
+        assertEquals(expectedList, outContent.toString());
+    }
+
 }
