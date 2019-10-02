@@ -33,7 +33,7 @@ public class BookListTest {
     @Test
     public void testAddBookToBookList() {
         addBook("Book1", "Author1", 2000);
-        assertEquals("Book1", getBooks().get(0).title);
+        assertEquals("Book1", getBooks().get(0).getTitle());
     }
 
     @Test
