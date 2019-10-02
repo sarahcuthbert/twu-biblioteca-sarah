@@ -8,6 +8,7 @@ public class BibliotecaApp {
     private static final String MENU_MESSAGE = "MAIN MENU. \nEnter the number of what you would like to see and press Enter.";
     private static final String ERROR_INPUT_MESSAGE = "Please select a valid option!";
     private static final String CHECKOUT_MESSAGE = "Enter the number of a book to check it out and press Enter.";
+    private static final String CHECKOUT_CONFIRM_MESSAGE = "Thank you! Enjoy the book.";
 
     private static ArrayList<Book> books = new ArrayList<Book>();
     private static boolean viewingBookList = false;
@@ -71,6 +72,7 @@ public class BibliotecaApp {
     static void checkOutBook(int bookNumber) {
         if(bookNumber <= books.size()) {
             books.remove(bookNumber-1); //-1 as list starts at 1 not 0
+            System.out.println(CHECKOUT_CONFIRM_MESSAGE);
             displayAllBooks();
         }
     }

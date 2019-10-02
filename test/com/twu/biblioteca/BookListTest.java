@@ -82,4 +82,15 @@ public class BookListTest {
         checkOutBook(1);
         assertEquals(0, getBooks().size());
     }
+
+    @Test
+    public void testCheckOutBookConfirmMessage() {
+        addBook("Book1", "Author1", 2000);
+        checkOutBook(1);
+        String expectedList = "Thank you! Enjoy the book.\n";
+        expectedList += "Available Books:\n";
+        expectedList += "Number     Title                           Author                         Publication Date              \n";
+        expectedList += "Enter the number of a book to check it out and press Enter.\n";
+        assertEquals(expectedList, outContent.toString());
+    }
 }
