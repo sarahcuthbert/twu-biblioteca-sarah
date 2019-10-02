@@ -1,13 +1,10 @@
 package com.twu.biblioteca;
 
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.InputStream;
 import java.io.PrintStream;
 
 import static com.twu.biblioteca.BibliotecaApp.*;
@@ -56,14 +53,14 @@ public class WelcomeTest {
     @Test
     public void testMenuResponseUnexpected() {
         handleUserResponse("abc");
-        String expectedError = "Incorrect Input. Please enter a valid number.\n";
+        String expectedError = "Please select a valid option!\n";
         assertEquals(expectedError, outContent.toString());
     }
 
     @Test
     public void testMenuResponseNumberBig() {
         handleUserResponse("100");
-        String expectedError = "Incorrect Input. Please enter a valid number.\n";
+        String expectedError = "Please select a valid option!\n";
         assertEquals(expectedError, outContent.toString());
     }
 

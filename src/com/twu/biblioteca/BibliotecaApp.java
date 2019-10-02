@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class BibliotecaApp {
     private static final String WELCOME_MESSAGE = "Welcome to Biblioteca. Your one-stop-shop for great book titles in Bangalore!";
     private static final String MENU_MESSAGE = "MAIN MENU. \nEnter the number of what you would like to see and press Enter.";
-    private static final String ERROR_INPUT_MESSAGE = "Incorrect Input. Please enter a valid number.";
+    private static final String ERROR_INPUT_MESSAGE = "Please select a valid option!";
     private static ArrayList<Book> books = new ArrayList<Book>();
 
     public static void main(String[] args) {
