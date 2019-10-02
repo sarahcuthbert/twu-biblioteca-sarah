@@ -39,6 +39,7 @@ public class WelcomeTest {
         displayMainMenu();
         String expectedMenuMsg = "MAIN MENU. \nEnter the number of what you would like to see and press Enter.\n";
         expectedMenuMsg += "1. List of Books\n";
+        expectedMenuMsg += "Type 'exit' at any point to quit.\n";
         assertEquals(expectedMenuMsg, outContent.toString());
     }
 
@@ -62,6 +63,18 @@ public class WelcomeTest {
         handleUserResponse("100");
         String expectedError = "Please select a valid option!\n";
         assertEquals(expectedError, outContent.toString());
+    }
+
+    @Test
+    public void testMenuResponseExit() {
+        boolean handle = handleUserResponse("exit");
+        assertFalse(handle);
+    }
+
+    @Test
+    public void testMenuResponseExitCaps() {
+        boolean handle = handleUserResponse("EXIt");
+        assertFalse(handle);
     }
 
 }

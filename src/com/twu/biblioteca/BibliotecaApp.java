@@ -22,22 +22,23 @@ public class BibliotecaApp {
     static void displayMainMenu() {
         System.out.println(MENU_MESSAGE);
         System.out.println("1. List of Books");
+        System.out.println("Type 'exit' at any point to quit.");
     }
 
     private static void getUserSelection() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             String userIn = scanner.nextLine();
-            if (handleUserResponse(userIn)) break;
+            if(!handleUserResponse(userIn)) return;
         }
     }
 
     static boolean handleUserResponse(String userIn) {
         try {
+            if (userIn.toLowerCase().equals("exit")) return false;
             int response = Integer.parseInt(userIn);
             if (response == 1) {
                 displayAllBooks();
-                return true;
             }
             else {
                 System.out.println(ERROR_INPUT_MESSAGE);
@@ -45,7 +46,7 @@ public class BibliotecaApp {
         } catch (NumberFormatException nfe) {
             System.out.println(ERROR_INPUT_MESSAGE);
         }
-        return false;
+        return true;
     }
 
     static void displayAllBooks() {
