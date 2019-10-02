@@ -19,7 +19,7 @@ public class BookListTest {
     public void setUpStringReader() {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        setBooks(new ArrayList<Book>());
+        setAvailableBooks(new ArrayList<Book>());
     }
 
     @Test
@@ -28,13 +28,14 @@ public class BookListTest {
         String expectedList = "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
         expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
+        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
     @Test
     public void testAddBookToBookList() {
         addBook("Book1", "Author1", 2000);
-        assertEquals("Book1", getBooks().get(0).getTitle());
+        assertEquals("Book1", getAvailableBooks().get(0).getTitle());
     }
 
     @Test
@@ -45,6 +46,7 @@ public class BookListTest {
         expectedList += "Title                           Author                         Publication Date              \n";
         expectedList += "Book1                           Author1                        2000                          \n";
         expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
+        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -60,6 +62,7 @@ public class BookListTest {
         expectedList += "Book2                           Author2                        2001                          \n";
         expectedList += "Book3                           Author3                        2003                          \n";
         expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
+        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -73,6 +76,7 @@ public class BookListTest {
         expectedList += "Book1                           Author1                        2000                          \n";
         expectedList += "Book1Book2Book3Book4Book5       Author2                        2001                          \n";
         expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
+        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -80,7 +84,7 @@ public class BookListTest {
     public void testCheckOutBook() {
         addBook("Book1", "Author1", 2000);
         checkOutBook("Book1");
-        assertEquals(0, getBooks().size());
+        assertEquals(0, getAvailableBooks().size());
     }
 
     @Test
@@ -91,6 +95,7 @@ public class BookListTest {
         expectedList += "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
         expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
+        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -101,4 +106,14 @@ public class BookListTest {
         String expectedList = "Sorry, that book is not available\n";
         assertEquals(expectedList, outContent.toString());
     }
+
+    @Test
+    public void testReturnBook() {
+        ArrayList<Book> books = new ArrayList<Book>();
+        books.add(new Book("Book1", "Author1", 2000) );
+        setCheckedOutBooks(books);
+        returnBook("Book1");
+        assertEquals(1, getAvailableBooks().size());
+    }
+
 }

@@ -11,8 +11,10 @@ public class BibliotecaApp {
     private static final String CHECKOUT_MESSAGE = "Enter 'checkout ' followed by the name of the book to check it out and press Enter.";
     private static final String CHECKOUT_CONFIRM_MESSAGE = "Thank you! Enjoy the book.";
     private static final String CHECKOUT_ERROR_MESSAGE = "Sorry, that book is not available";
+    private static final String RETURN_MESSAGE = "Enter 'return ' followed by the name of the book to return and press Enter.";
 
-    private static ArrayList<Book> books = new ArrayList<Book>();
+    private static ArrayList<Book> availableBooks = new ArrayList<Book>();
+    private static ArrayList<Book> checkedOutBooks = new ArrayList<Book>();
     private static boolean viewingBookList = false;
 
     public static void main(String[] args) {
@@ -47,10 +49,16 @@ public class BibliotecaApp {
             if (viewingBookList) {
                 String request = userIn.toLowerCase();
                 String[] requestArray = request.split(" ");
-                if(requestArray[0].equals("checkout")) {
-                    String bookName = Arrays.toString(request.split(" ", 2));
+                if (requestArray[0].equals("checkout")) {
+                    String bookName = request.split(" ", 2)[1];
+                    System.out.println(bookName);
                     checkOutBook(bookName);
                 }
+                else if (requestArray[0].equals("return")) {
+                    String bookName = request.split(" ", 2)[1];
+                    returnBook(bookName);
+                }
+
             }
             else {
                 int response = Integer.parseInt(userIn);
@@ -70,16 +78,18 @@ public class BibliotecaApp {
     static void displayAllBooks() {
         System.out.println("Available Books:");
         System.out.printf("%-30.30s  %-30.30s %-30.30s%n", "Title", "Author", "Publication Date");
-        for (Book book: books) {
+        for (Book book: availableBooks) {
                 book.printBook();
         }
         System.out.println(CHECKOUT_MESSAGE);
+        System.out.println(RETURN_MESSAGE);
     }
 
     static void checkOutBook(String bookName) {
-        int bookPosition = findBook(bookName);
-        if(bookPosition > -1) {
-            books.remove(bookPosition); //-1 as list starts at 1 not 0
+        int bookPosition = findBook(bookName, availableBooks);
+        if (bookPosition > -1) {
+            Book book = availableBooks.remove(bookPosition);
+            checkedOutBooks.add(book);
             System.out.println(CHECKOUT_CONFIRM_MESSAGE);
             displayAllBooks();
         }
@@ -88,9 +98,18 @@ public class BibliotecaApp {
         }
     }
 
-    private static int findBook(String bookName) {
+    static void returnBook(String bookName) {
+        int bookPosition = findBook(bookName, checkedOutBooks);
+        if (bookPosition > -1) {
+            Book book = checkedOutBooks.remove(bookPosition);
+            availableBooks.add(book);
+            displayAllBooks();
+        }
+    }
+
+    private static int findBook(String bookName, ArrayList<Book> books) {
         for (int i = 0; i < books.size(); i++) {
-            if(books.get(i).getTitle().equals(bookName)) {
+            if (books.get(i).getTitle().toLowerCase().equals(bookName)) {
                 return i;
             }
         }
@@ -98,14 +117,18 @@ public class BibliotecaApp {
     }
 
     static void addBook(String bookName, String author, int publicationDate) {
-        books.add(new Book(bookName, author, publicationDate));
+        availableBooks.add(new Book(bookName, author, publicationDate));
     }
 
-    static ArrayList<Book> getBooks() {
-        return books;
+    static ArrayList<Book> getAvailableBooks() {
+        return availableBooks;
     }
 
-    static void setBooks(ArrayList<Book> books) {
-        BibliotecaApp.books = books;
+    static void setAvailableBooks(ArrayList<Book> availableBooks) {
+        BibliotecaApp.availableBooks = availableBooks;
+    }
+
+    static void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
+        BibliotecaApp.checkedOutBooks = checkedOutBooks;
     }
 }
