@@ -116,4 +116,19 @@ public class BookListTest {
         assertEquals(1, getAvailableBooks().size());
     }
 
+    @Test
+    public void testReturnBookConfirmMessage() {
+        ArrayList<Book> books = new ArrayList<Book>();
+        books.add(new Book("Book1", "Author1", 2000) );
+        setCheckedOutBooks(books);
+        returnBook("book1");
+        String expectedList = "Thank you for returning the book.\n";
+        expectedList += "Available Books:\n";
+        expectedList += "Title                           Author                         Publication Date              \n";
+        expectedList += "Book1                           Author1                        2000                          \n";
+        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
+        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
+        assertEquals(expectedList, outContent.toString());
+    }
+
 }

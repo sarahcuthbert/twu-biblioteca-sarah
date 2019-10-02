@@ -12,6 +12,8 @@ public class BibliotecaApp {
     private static final String CHECKOUT_CONFIRM_MESSAGE = "Thank you! Enjoy the book.";
     private static final String CHECKOUT_ERROR_MESSAGE = "Sorry, that book is not available";
     private static final String RETURN_MESSAGE = "Enter 'return ' followed by the name of the book to return and press Enter.";
+    private static final String RETURN_SUCCESS_MESSAGE = "Thank you for returning the book.";
+
 
     private static ArrayList<Book> availableBooks = new ArrayList<Book>();
     private static ArrayList<Book> checkedOutBooks = new ArrayList<Book>();
@@ -103,6 +105,7 @@ public class BibliotecaApp {
         if (bookPosition > -1) {
             Book book = checkedOutBooks.remove(bookPosition);
             availableBooks.add(book);
+            System.out.println(RETURN_SUCCESS_MESSAGE);
             displayAllBooks();
         }
     }
