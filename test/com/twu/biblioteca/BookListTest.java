@@ -26,7 +26,8 @@ public class BookListTest {
     public void testBookListHeadingDisplayed() {
         displayAllBooks();
         String expectedList = "Available Books:\n";
-        expectedList += "Title                           Author                         Publication Date              \n";
+        expectedList += "Number     Title                           Author                         Publication Date              \n";
+        expectedList += "Enter the number of a book to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -41,8 +42,9 @@ public class BookListTest {
         addBook("Book1", "Author1", 2000);
         displayAllBooks();
         String expectedList = "Available Books:\n";
-        expectedList += "Title                           Author                         Publication Date              \n";
-        expectedList += "Book1                           Author1                        2000                          \n";
+        expectedList += "Number     Title                           Author                         Publication Date              \n";
+        expectedList += "1          Book1                           Author1                        2000                          \n";
+        expectedList += "Enter the number of a book to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -53,10 +55,11 @@ public class BookListTest {
         addBook("Book3", "Author3", 2003);
         displayAllBooks();
         String expectedList = "Available Books:\n";
-        expectedList += "Title                           Author                         Publication Date              \n";
-        expectedList += "Book1                           Author1                        2000                          \n";
-        expectedList += "Book2                           Author2                        2001                          \n";
-        expectedList += "Book3                           Author3                        2003                          \n";
+        expectedList += "Number     Title                           Author                         Publication Date              \n";
+        expectedList += "1          Book1                           Author1                        2000                          \n";
+        expectedList += "2          Book2                           Author2                        2001                          \n";
+        expectedList += "3          Book3                           Author3                        2003                          \n";
+        expectedList += "Enter the number of a book to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -66,9 +69,17 @@ public class BookListTest {
         addBook("Book1Book2Book3Book4Book5", "Author2", 2001);
         displayAllBooks();
         String expectedList = "Available Books:\n";
-        expectedList += "Title                           Author                         Publication Date              \n";
-        expectedList += "Book1                           Author1                        2000                          \n";
-        expectedList += "Book1Book2Book3Book4Book5       Author2                        2001                          \n";
+        expectedList += "Number     Title                           Author                         Publication Date              \n";
+        expectedList += "1          Book1                           Author1                        2000                          \n";
+        expectedList += "2          Book1Book2Book3Book4Book5       Author2                        2001                          \n";
+        expectedList += "Enter the number of a book to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
+    }
+
+    @Test
+    public void testCheckOutBook() {
+        addBook("Book1", "Author1", 2000);
+        checkOutBook(1);
+        assertEquals(0, getBooks().size());
     }
 }
