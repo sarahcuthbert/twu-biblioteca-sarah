@@ -18,7 +18,7 @@ public class BibliotecaApp {
         library = new Library(currentUser);
         movieLibrary = new MovieLibrary(currentUser);
         userList = new ArrayList<User>();
-        addUser("1111-1111", "abc");
+        addUser("1111-1111", "abc", "name", "email", 1202020);
         printWelcomeMessage();
         displayMainMenu();
         getUserSelection();
@@ -32,6 +32,7 @@ public class BibliotecaApp {
         System.out.println(MENU_MESSAGE);
         System.out.println("1. List of Books");
         System.out.println("2. List of Movies");
+        if(currentUser != null) System.out.println("3. View My Information");
         System.out.println("Type 'exit' at any point to quit.");
         if(currentUser == null) System.out.println("Type 'login' at any point to login.");
 
@@ -80,6 +81,9 @@ public class BibliotecaApp {
             movieLibrary.displayAllMovies();
             movieLibrary.setViewingMovieList(true);
         }
+        else if (currentUser != null && response == 3) {
+            currentUser.displayInformation();
+        }
         else {
             System.out.println(ERROR_INPUT_MESSAGE);
         }
@@ -119,8 +123,8 @@ public class BibliotecaApp {
         return null;
     }
 
-    private static void addUser(String libNumber, String password) {
-        userList.add(new User(libNumber, password));
+    private static void addUser(String libNumber, String password, String name, String email, int phone) {
+        userList.add(new User(libNumber, password, name, email, phone));
     }
 
     static void setLibrary(Library library) {
@@ -129,5 +133,9 @@ public class BibliotecaApp {
 
     static void setMovieLibrary(MovieLibrary movieLibrary) {
         BibliotecaApp.movieLibrary = movieLibrary;
+    }
+
+    static void setCurrentUser(User currentUser) {
+        BibliotecaApp.currentUser = currentUser;
     }
 }

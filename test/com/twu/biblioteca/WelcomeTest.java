@@ -68,6 +68,29 @@ public class WelcomeTest {
     }
 
     @Test
+    public void testMenuResponseExpectedToUserInfo() {
+        User user = new User("1111-1111", "pass", "name", "email", 1202020);
+        setMovieLibrary(new MovieLibrary(user));
+        setLibrary(new Library(user));
+        setCurrentUser(user);
+        handleUserResponse("3");
+        String expectedInfo = "Your Information:\n\n";
+        expectedInfo+= "Library Number: 1111-1111\nName: name\n";
+        expectedInfo+= "Email: email\nPhone Number: 1202020\n";
+        assertEquals(expectedInfo, outContent.toString());
+    }
+
+    @Test
+    public void testMenuResponseExpectedToUserInfoNotLoggedIn() {
+        setCurrentUser(null);
+        setMovieLibrary(new MovieLibrary(null));
+        setLibrary(new Library(null));
+        handleUserResponse("3");
+        String expectedInfo = "Please select a valid option!\n";
+        assertEquals(expectedInfo, outContent.toString());
+    }
+
+    @Test
     public void testMenuResponseUnexpected() {
         setMovieLibrary(new MovieLibrary(null));
         setLibrary(new Library(null));

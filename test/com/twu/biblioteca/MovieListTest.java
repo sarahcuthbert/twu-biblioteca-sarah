@@ -34,7 +34,7 @@ public class MovieListTest {
 
     @Test
     public void testMovieListHeadingDisplayedLoggedIn() {
-        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.setCurrentUser(new User("1111-1111", "abc", "name", "email", 1202020));
         library.displayAllMovies();
         String expectedList = "Available Movies:\n";
         expectedList += "Name                           Year       Director                       Rating    \n";
@@ -75,7 +75,7 @@ public class MovieListTest {
 
     @Test
     public void testCheckOutBook() {
-        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.setCurrentUser(new User("1111-1111", "abc", "name", "email", 1202020));
         library.addMovie("movie1", 2001, "director1", 1);
         library.checkOutMovie("movie1");
         assertEquals(0, library.getAvailableMovies().size());
@@ -83,7 +83,7 @@ public class MovieListTest {
 
     @Test
     public void testCheckOutBookConfirmMessage() {
-        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.setCurrentUser(new User("1111-1111", "abc", "name", "email", 1202020));
         library.addMovie("movie1", 2001, "director1", 1);
         library.checkOutMovie("movie1");
         String expectedList = "Thank you! Enjoy the movie.\n";

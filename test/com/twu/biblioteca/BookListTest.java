@@ -34,7 +34,7 @@ public class BookListTest {
 
     @Test
     public void testBookListHeadingDisplayedLoggedIn() {
-        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.setCurrentUser(new User("1111-1111", "abc", "name", "email", 1202020));
         library.displayAllBooks();
         String expectedList = "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
@@ -90,7 +90,7 @@ public class BookListTest {
 
     @Test
     public void testCheckOutBook() {
-        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.setCurrentUser(new User("1111-1111", "abc", "name", "email", 1202020));
         library.addBook("Book1", "Author1", 2000);
         library.checkOutBook("Book1");
         assertEquals(0, library.getAvailableBooks().size());
@@ -98,7 +98,7 @@ public class BookListTest {
 
     @Test
     public void testCheckOutBookConfirmMessage() {
-        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.setCurrentUser(new User("1111-1111", "abc", "name", "email", 1202020));
         library.addBook("Book1", "Author1", 2000);
         library.checkOutBook("Book1");
         String expectedList = "Thank you! Enjoy the book.\n";
