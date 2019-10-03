@@ -11,9 +11,14 @@ class Library {
     private static final String RETURN_SUCCESS_MESSAGE = "Thank you for returning the book.";
     private static final String RETURN_ERROR_MESSAGE = "That is not a valid book to return.";
 
+    private boolean viewingBookList;
+
     private ArrayList<Book> availableBooks = new ArrayList<Book>();
     private ArrayList<Book> checkedOutBooks = new ArrayList<Book>();
 
+    Library() {
+        this.viewingBookList = false;
+    }
 
     void displayAllBooks() {
         System.out.println("Available Books:");
@@ -87,5 +92,13 @@ class Library {
 
     void setCheckedOutBooks(ArrayList<Book> checkedOutBooks) {
         this.checkedOutBooks = checkedOutBooks;
+    }
+
+    boolean isViewingBookList() {
+        return viewingBookList;
+    }
+
+    void setViewingBookList(boolean viewingBookList) {
+        this.viewingBookList = viewingBookList;
     }
 }

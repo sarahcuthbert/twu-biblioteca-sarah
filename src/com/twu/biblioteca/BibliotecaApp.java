@@ -7,11 +7,12 @@ public class BibliotecaApp {
     private static final String MENU_MESSAGE = "MAIN MENU. \nEnter the number of what you would like to see and press Enter.";
     private static final String ERROR_INPUT_MESSAGE = "Please select a valid option!";
 
-    private static boolean viewingBookList = false;
     private static Library library;
+    private static MovieLibrary movieLibrary;
 
     public static void main(String[] args) {
         library = new Library();
+        movieLibrary = new MovieLibrary();
         printWelcomeMessage();
         displayMainMenu();
         getUserSelection();
@@ -24,6 +25,7 @@ public class BibliotecaApp {
     static void displayMainMenu() {
         System.out.println(MENU_MESSAGE);
         System.out.println("1. List of Books");
+        System.out.println("2. List of Movies");
         System.out.println("Type 'exit' at any point to quit.");
     }
 
@@ -38,11 +40,11 @@ public class BibliotecaApp {
     static boolean handleUserResponse(String userIn) {
 
             if (userIn.toLowerCase().equals("exit")) return false;
-            if (viewingBookList) {
+            if (library.isViewingBookList()) {
                 String request = userIn.toLowerCase();
                 library.handleBookListInput(request);
             }
-            else {
+            else if (!movieLibrary.isViewingMovieList()) {
                 try {
                     int response = Integer.parseInt(userIn);
                     handleUserMainMenuInput(response);
@@ -55,15 +57,24 @@ public class BibliotecaApp {
     }
 
     private static void handleUserMainMenuInput(int response) {
-        if (response == 1 && !viewingBookList) {
+        if (response == 1 ) {
             library.displayAllBooks();
-            viewingBookList = true;
-        } else {
+            library.setViewingBookList(true);
+        }
+        else if (response == 2) {
+            movieLibrary.displayAllMovies();
+            movieLibrary.setViewingMovieList(true);
+        }
+        else {
             System.out.println(ERROR_INPUT_MESSAGE);
         }
     }
 
     static void setLibrary(Library library) {
         BibliotecaApp.library = library;
+    }
+
+    static void setMovieLibrary(MovieLibrary movieLibrary) {
+        BibliotecaApp.movieLibrary = movieLibrary;
     }
 }
