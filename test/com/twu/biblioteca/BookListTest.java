@@ -19,12 +19,22 @@ public class BookListTest {
     public void setUpStringReader() {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        library = new Library();
+        library = new Library(null);
         library.setAvailableBooks(new ArrayList<Book>());
     }
 
     @Test
     public void testBookListHeadingDisplayed() {
+        library.displayAllBooks();
+        String expectedList = "Available Books:\n";
+        expectedList += "Title                           Author                         Publication Date              \n";
+        expectedList += "Type 'login' at any point to login.\n";
+        assertEquals(expectedList, outContent.toString());
+    }
+
+    @Test
+    public void testBookListHeadingDisplayedLoggedIn() {
+        library.setCurrentUser(new User("1111-1111", "abc"));
         library.displayAllBooks();
         String expectedList = "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
@@ -46,8 +56,7 @@ public class BookListTest {
         String expectedList = "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
         expectedList += "Book1                           Author1                        2000                          \n";
-        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
-        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -62,8 +71,7 @@ public class BookListTest {
         expectedList += "Book1                           Author1                        2000                          \n";
         expectedList += "Book2                           Author2                        2001                          \n";
         expectedList += "Book3                           Author3                        2003                          \n";
-        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
-        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -76,13 +84,13 @@ public class BookListTest {
         expectedList += "Title                           Author                         Publication Date              \n";
         expectedList += "Book1                           Author1                        2000                          \n";
         expectedList += "Book1Book2Book3Book4Book5       Author2                        2001                          \n";
-        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
-        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
     @Test
     public void testCheckOutBook() {
+        library.setCurrentUser(new User("1111-1111", "abc"));
         library.addBook("Book1", "Author1", 2000);
         library.checkOutBook("Book1");
         assertEquals(0, library.getAvailableBooks().size());
@@ -90,6 +98,7 @@ public class BookListTest {
 
     @Test
     public void testCheckOutBookConfirmMessage() {
+        library.setCurrentUser(new User("1111-1111", "abc"));
         library.addBook("Book1", "Author1", 2000);
         library.checkOutBook("Book1");
         String expectedList = "Thank you! Enjoy the book.\n";
@@ -127,8 +136,7 @@ public class BookListTest {
         expectedList += "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
         expectedList += "Book1                           Author1                        2000                          \n";
-        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
-        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 

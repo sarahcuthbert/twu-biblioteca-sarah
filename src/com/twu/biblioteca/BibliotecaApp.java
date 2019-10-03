@@ -1,5 +1,6 @@
 package com.twu.biblioteca;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class BibliotecaApp {
@@ -9,10 +10,15 @@ public class BibliotecaApp {
 
     private static Library library;
     private static MovieLibrary movieLibrary;
+    private static Scanner scanner;
+    private static ArrayList<User> userList;
+    private static User currentUser;
 
     public static void main(String[] args) {
-        library = new Library();
-        movieLibrary = new MovieLibrary();
+        library = new Library(currentUser);
+        movieLibrary = new MovieLibrary(currentUser);
+        userList = new ArrayList<User>();
+        addUser("1111-1111", "abc");
         printWelcomeMessage();
         displayMainMenu();
         getUserSelection();
@@ -27,10 +33,12 @@ public class BibliotecaApp {
         System.out.println("1. List of Books");
         System.out.println("2. List of Movies");
         System.out.println("Type 'exit' at any point to quit.");
+        if(currentUser == null) System.out.println("Type 'login' at any point to login.");
+
     }
 
     private static void getUserSelection() {
-        Scanner scanner = new Scanner(System.in);
+        scanner = new Scanner(System.in);
         while (true) {
             String userIn = scanner.nextLine();
             if(!handleUserResponse(userIn)) return;
@@ -40,11 +48,14 @@ public class BibliotecaApp {
     static boolean handleUserResponse(String userIn) {
 
             if (userIn.toLowerCase().equals("exit")) return false;
-            if (library.isViewingBookList()) {
+            if (userIn.toLowerCase().equals("login")) {
+                getUser();
+            }
+            else if (library.isViewingBookList() && currentUser != null) {
                 String request = userIn.toLowerCase();
                 library.handleBookListInput(request);
             }
-            else if(movieLibrary.isViewingMovieList()) {
+            else if(movieLibrary.isViewingMovieList() && currentUser != null) {
                 String request = userIn.toLowerCase();
                 movieLibrary.handleMovieListInput(request);
             }
@@ -72,6 +83,44 @@ public class BibliotecaApp {
         else {
             System.out.println(ERROR_INPUT_MESSAGE);
         }
+    }
+
+    private static void getUser() {
+        while (true) {
+            System.out.println("Library Number:");
+            String libNumber = scanner.nextLine();
+            String pattern = "\\d\\d\\d\\d-\\d\\d\\d\\d";
+            if (libNumber.matches(pattern)) {
+                System.out.println("Password:");
+                String password = scanner.nextLine();
+                User user = findUser(libNumber, password);
+                if(user == null) {
+                    System.out.println("Incorrect credentials. Try again.");
+                }
+                else {
+                    currentUser = user;
+                    movieLibrary.setCurrentUser(user);
+                    System.out.println("Successfully logged in!");
+                    break;
+                }
+            }
+            else {
+                System.out.println("Incorrect format. Please try again.");
+            }
+        }
+    }
+
+    private static User findUser(String libNumber, String password) {
+        for (User u: userList) {
+            if (u.getLibNumber().equals(libNumber) && u.getPassword().equals(password)) {
+                return u;
+            }
+        }
+        return null;
+    }
+
+    private static void addUser(String libNumber, String password) {
+        userList.add(new User(libNumber, password));
     }
 
     static void setLibrary(Library library) {

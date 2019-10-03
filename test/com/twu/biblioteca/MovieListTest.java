@@ -19,7 +19,7 @@ public class MovieListTest {
     public void setUpStringReader() {
         outContent = new ByteArrayOutputStream();
         System.setOut(new PrintStream(outContent));
-        library = new MovieLibrary();
+        library = new MovieLibrary(null);
         library.setAvailableMovies(new ArrayList<Movie>());
     }
 
@@ -28,10 +28,19 @@ public class MovieListTest {
         library.displayAllMovies();
         String expectedList = "Available Movies:\n";
         expectedList += "Name                           Year       Director                       Rating    \n";
-        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
+    @Test
+    public void testMovieListHeadingDisplayedLoggedIn() {
+        library.setCurrentUser(new User("1111-1111", "abc"));
+        library.displayAllMovies();
+        String expectedList = "Available Movies:\n";
+        expectedList += "Name                           Year       Director                       Rating    \n";
+        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
+        assertEquals(expectedList, outContent.toString());
+    }
     @Test
     public void testAddMovieToMovieList() {
         library.addMovie("movie1", 2001, "director1", 5);
@@ -45,7 +54,7 @@ public class MovieListTest {
         String expectedList = "Available Movies:\n";
         expectedList += "Name                           Year       Director                       Rating    \n";
         expectedList += "movie1                         2001       director1                      5         \n";
-        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -60,12 +69,13 @@ public class MovieListTest {
         expectedList += "movie1                         2001       director1                      1         \n";
         expectedList += "movie2                         2002       director2                      8         \n";
         expectedList += "movie3                         2003       director1                      10        \n";
-        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
     @Test
     public void testCheckOutBook() {
+        library.setCurrentUser(new User("1111-1111", "abc"));
         library.addMovie("movie1", 2001, "director1", 1);
         library.checkOutMovie("movie1");
         assertEquals(0, library.getAvailableMovies().size());
@@ -73,6 +83,7 @@ public class MovieListTest {
 
     @Test
     public void testCheckOutBookConfirmMessage() {
+        library.setCurrentUser(new User("1111-1111", "abc"));
         library.addMovie("movie1", 2001, "director1", 1);
         library.checkOutMovie("movie1");
         String expectedList = "Thank you! Enjoy the movie.\n";

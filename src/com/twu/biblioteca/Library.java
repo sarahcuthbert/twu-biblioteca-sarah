@@ -10,14 +10,17 @@ class Library {
     private static final String RETURN_MESSAGE = "Enter 'return ' followed by the name of the book to return and press Enter.";
     private static final String RETURN_SUCCESS_MESSAGE = "Thank you for returning the book.";
     private static final String RETURN_ERROR_MESSAGE = "That is not a valid book to return.";
+    private static final String LOGIN_MESSAGE = "Type 'login' at any point to login.";
 
     private boolean viewingBookList;
 
     private ArrayList<Book> availableBooks = new ArrayList<Book>();
     private ArrayList<Book> checkedOutBooks = new ArrayList<Book>();
+    private User currentUser;
 
-    Library() {
+    Library(User currentUser) {
         this.viewingBookList = false;
+        this.currentUser = currentUser;
     }
 
     void displayAllBooks() {
@@ -26,8 +29,9 @@ class Library {
         for (Book book: availableBooks) {
             book.printBook();
         }
-        System.out.println(CHECKOUT_MESSAGE);
-        System.out.println(RETURN_MESSAGE);
+        if (currentUser != null) System.out.println(CHECKOUT_MESSAGE);
+        if (currentUser != null) System.out.println(RETURN_MESSAGE);
+        if (currentUser == null) System.out.println(LOGIN_MESSAGE);
     }
 
 
@@ -36,6 +40,7 @@ class Library {
         if (bookPosition > -1) {
             Book book = availableBooks.remove(bookPosition);
             checkedOutBooks.add(book);
+            currentUser.checkoutBook(book);
             System.out.println(CHECKOUT_CONFIRM_MESSAGE);
             displayAllBooks();
         }
@@ -100,4 +105,9 @@ class Library {
     void setViewingBookList(boolean viewingBookList) {
         this.viewingBookList = viewingBookList;
     }
+
+    void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
+
 }

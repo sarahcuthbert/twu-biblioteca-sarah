@@ -6,12 +6,15 @@ class MovieLibrary {
     private static final String CHECKOUT_MESSAGE = "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.";
     private static final String CHECKOUT_CONFIRM_MESSAGE = "Thank you! Enjoy the movie.";
     private static final String CHECKOUT_ERROR_MESSAGE = "Sorry, that movie is not available";
+    private static final String LOGIN_MESSAGE = "Type 'login' at any point to login.";
 
     private ArrayList<Movie> availableMovies = new ArrayList<Movie>();
     private boolean viewingMovieList;
+    private User currentUser;
 
-    MovieLibrary() {
+    MovieLibrary(User currentUser) {
         this.viewingMovieList = false;
+        this.currentUser = currentUser;
     }
 
     void displayAllMovies() {
@@ -20,13 +23,16 @@ class MovieLibrary {
         for (Movie movie: availableMovies) {
              movie.printMovie();
         }
-        System.out.println(CHECKOUT_MESSAGE);
+        if (currentUser != null) System.out.println(CHECKOUT_MESSAGE);
+        if(currentUser == null) System.out.println(LOGIN_MESSAGE);
+
     }
 
     void checkOutMovie(String movieName) {
         int position = findMovie(movieName);
         if (position > -1) {
-            availableMovies.remove(position);
+            Movie movie = availableMovies.remove(position);
+            currentUser.checkoutMovie(movie);
             System.out.println(CHECKOUT_CONFIRM_MESSAGE);
             displayAllMovies();
         }
@@ -71,5 +77,9 @@ class MovieLibrary {
 
     ArrayList<Movie> getAvailableMovies() {
         return availableMovies;
+    }
+
+    void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
     }
 }

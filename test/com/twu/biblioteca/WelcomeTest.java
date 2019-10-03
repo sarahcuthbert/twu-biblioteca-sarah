@@ -41,36 +41,36 @@ public class WelcomeTest {
         expectedMenuMsg += "1. List of Books\n";
         expectedMenuMsg += "2. List of Movies\n";
         expectedMenuMsg += "Type 'exit' at any point to quit.\n";
+        expectedMenuMsg += "Type 'login' at any point to login.\n";
         assertEquals(expectedMenuMsg, outContent.toString());
     }
 
     @Test
     public void testMenuResponseExpected() {
-        setLibrary(new Library());
-        setMovieLibrary(new MovieLibrary());
+        setLibrary(new Library(null));
+        setMovieLibrary(new MovieLibrary(null));
         handleUserResponse("1");
         String expectedList = "Available Books:\n";
         expectedList += "Title                           Author                         Publication Date              \n";
-        expectedList += "Enter 'checkout ' followed by the name of the book to check it out and press Enter.\n";
-        expectedList += "Enter 'return ' followed by the name of the book to return and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
     @Test
     public void testMenuResponseExpectedToMovies() {
-        setMovieLibrary(new MovieLibrary());
-        setLibrary(new Library());
+        setMovieLibrary(new MovieLibrary(null));
+        setLibrary(new Library(null));
         handleUserResponse("2");
         String expectedList = "Available Movies:\n";
         expectedList += "Name                           Year       Director                       Rating    \n";
-        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
+        expectedList += "Type 'login' at any point to login.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
     @Test
     public void testMenuResponseUnexpected() {
-        setMovieLibrary(new MovieLibrary());
-        setLibrary(new Library());
+        setMovieLibrary(new MovieLibrary(null));
+        setLibrary(new Library(null));
         handleUserResponse("abc");
         String expectedError = "Please select a valid option!\n";
         assertEquals(expectedError, outContent.toString());
@@ -78,8 +78,8 @@ public class WelcomeTest {
 
     @Test
     public void testMenuResponseNumberBig() {
-        setMovieLibrary(new MovieLibrary());
-        setLibrary(new Library());
+        setMovieLibrary(new MovieLibrary(null));
+        setLibrary(new Library(null));
         handleUserResponse("100");
         String expectedError = "Please select a valid option!\n";
         assertEquals(expectedError, outContent.toString());
