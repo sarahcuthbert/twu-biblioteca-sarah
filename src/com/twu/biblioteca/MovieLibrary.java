@@ -3,6 +3,9 @@ package com.twu.biblioteca;
 import java.util.ArrayList;
 
 class MovieLibrary {
+    private static final String CHECKOUT_MESSAGE = "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.";
+    private static final String CHECKOUT_CONFIRM_MESSAGE = "Thank you! Enjoy the movie.";
+    private static final String CHECKOUT_ERROR_MESSAGE = "Sorry, that movie is not available";
 
     private ArrayList<Movie> availableMovies = new ArrayList<Movie>();
     private boolean viewingMovieList;
@@ -17,8 +20,39 @@ class MovieLibrary {
         for (Movie movie: availableMovies) {
              movie.printMovie();
         }
+        System.out.println(CHECKOUT_MESSAGE);
     }
 
+    void checkOutMovie(String movieName) {
+        int position = findMovie(movieName);
+        if (position > -1) {
+            availableMovies.remove(position);
+            System.out.println(CHECKOUT_CONFIRM_MESSAGE);
+            displayAllMovies();
+        }
+        else {
+            System.out.println(CHECKOUT_ERROR_MESSAGE);
+        }
+    }
+
+    private int findMovie(String movieName) {
+        movieName = movieName.toLowerCase();
+        for (int i = 0; i < availableMovies.size(); i++) {
+            if (availableMovies.get(i).getName().toLowerCase().equals(movieName)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    void handleMovieListInput(String request) {
+        String[] requestArray = request.split(" ", 2);
+        System.out.println(requestArray[0]);
+        if (requestArray[0].equals("checkout")) {
+            checkOutMovie(requestArray[1]);
+        }
+
+    }
     void addMovie(String name, int year, String director, int rating) {
         availableMovies.add(new Movie(name, year, director, rating));
     }

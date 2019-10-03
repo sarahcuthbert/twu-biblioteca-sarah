@@ -68,13 +68,12 @@ class Library {
     }
 
     void handleBookListInput(String request) {
-        String[] requestArray = request.split(" ");
-        String bookName = request.split(" ", 2)[1];
+        String[] requestArray = request.split(" ", 2);
         if (requestArray[0].equals("checkout")) {
-            checkOutBook(bookName);
+            checkOutBook(requestArray[1]);
         }
         else if (requestArray[0].equals("return")) {
-            returnBook(bookName);
+            returnBook(requestArray[1]);
         }
     }
 

@@ -28,6 +28,7 @@ public class MovieListTest {
         library.displayAllMovies();
         String expectedList = "Available Movies:\n";
         expectedList += "Name                           Year       Director                       Rating    \n";
+        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -44,6 +45,7 @@ public class MovieListTest {
         String expectedList = "Available Movies:\n";
         expectedList += "Name                           Year       Director                       Rating    \n";
         expectedList += "movie1                         2001       director1                      5         \n";
+        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
@@ -58,7 +60,33 @@ public class MovieListTest {
         expectedList += "movie1                         2001       director1                      1         \n";
         expectedList += "movie2                         2002       director2                      8         \n";
         expectedList += "movie3                         2003       director1                      10        \n";
+        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 
+    @Test
+    public void testCheckOutBook() {
+        library.addMovie("movie1", 2001, "director1", 1);
+        library.checkOutMovie("movie1");
+        assertEquals(0, library.getAvailableMovies().size());
+    }
+
+    @Test
+    public void testCheckOutBookConfirmMessage() {
+        library.addMovie("movie1", 2001, "director1", 1);
+        library.checkOutMovie("movie1");
+        String expectedList = "Thank you! Enjoy the movie.\n";
+        expectedList += "Available Movies:\n";
+        expectedList += "Name                           Year       Director                       Rating    \n";
+        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
+        assertEquals(expectedList, outContent.toString());
+    }
+
+    @Test
+    public void testCheckOutBookErrorMessage() {
+        library.addMovie("movie1", 2001, "director1", 1);
+        library.checkOutMovie("movie2");
+        String expectedList = "Sorry, that movie is not available\n";
+        assertEquals(expectedList, outContent.toString());
+    }
 }

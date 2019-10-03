@@ -62,7 +62,8 @@ public class WelcomeTest {
         setLibrary(new Library());
         handleUserResponse("2");
         String expectedList = "Available Movies:\n";
-        expectedList += "Name                            Year       Director                       Rating    \n";
+        expectedList += "Name                           Year       Director                       Rating    \n";
+        expectedList += "Enter 'checkout ' followed by the name of the movie to check it out and press Enter.\n";
         assertEquals(expectedList, outContent.toString());
     }
 

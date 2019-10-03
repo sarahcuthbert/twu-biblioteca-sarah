@@ -44,7 +44,11 @@ public class BibliotecaApp {
                 String request = userIn.toLowerCase();
                 library.handleBookListInput(request);
             }
-            else if (!movieLibrary.isViewingMovieList()) {
+            else if(movieLibrary.isViewingMovieList()) {
+                String request = userIn.toLowerCase();
+                movieLibrary.handleMovieListInput(request);
+            }
+            else {
                 try {
                     int response = Integer.parseInt(userIn);
                     handleUserMainMenuInput(response);

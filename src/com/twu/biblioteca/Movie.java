@@ -20,4 +20,7 @@ class Movie {
         System.out.printf("%-30.30s %-10.10s %-30.30s %-10.10s%n", name, year, director, movieRating);
     }
 
+    String getName() {
+        return name;
+    }
 }
