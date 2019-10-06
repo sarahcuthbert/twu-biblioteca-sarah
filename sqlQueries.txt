@@ -1,0 +1,55 @@
+Q1.
+SELECT member.name FROM member, checkout_item, book 
+WHERE member.id = checkout_item.member_id 
+AND checkout_item.book_id = book.id 
+AND book.title = "The Hobbit";
+
+ANSWER:
+Anand Beck
+
+Q2.
+SELECT COUNT(*) FROM member WHERE 
+member.id NOT IN 
+(SELECT checkout_item.member_id FROM checkout_item)
+
+ANSWER:
+37
+
+Q3.
+SELECT * FROM book WHERE 
+NOT EXISTS (SELECT checkout_item.book_id FROM 
+checkout_item WHERE checkout_item.book_id=book.id) 
+UNION SELECT * FROM movie WHERE 
+NOT EXISTS (SELECT checkout_item.movie_id FROM 
+checkout_item WHERE checkout_item.movie_id=movie.id)
+
+ANSWER:
+2|Fellowship of the Ring
+6|1984
+6|Thin Red Line
+7|Crouching Tiger, Hidden Dragon
+7|Tom Sawyer
+8|Catcher in the Rye
+8|Lawrence of Arabia
+9|Office Space
+9|To Kill a Mockingbird
+10|Domain Driven Design
+
+Q4.
+INSERT INTO book VALUES (11, 'The Pragmatic Programmer');
+INSERT INTO member VALUES (43, 'Sarah C'); 
+INSERT INTO checkout_item VALUES (43, 11, null);
+SELECT member.name FROM member, checkout_item, book 
+WHERE member.id = checkout_item.member_id 
+AND checkout_item.book_id = book.id 
+AND book.title = "The Pragmatic Programmer";
+
+Q5.
+SELECT member.name FROM member, checkout_item, book 
+WHERE member.id = checkout_item.member_id 
+AND checkout_item.book_id = book.id 
+GROUP BY member.id
+HAVING COUNT(*) > 1
+
+ANSWER:
+Anand Beck
